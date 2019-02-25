@@ -15,16 +15,17 @@ const placesToMount = {
 }
 
 const mountTest = () => {
-  const shouldMount = true
+  const shouldMount = false
 
   Object.keys(placesToMount).map(mountPoint => {
     const { mount, unmount } = SystemActions.localPlace({ mountPoint })
-    const details = placesToMount[mountPoint]
+
     const {
       user,
       remoteHost,
       remotePath
-    } = details
+    } = placesToMount[mountPoint]
+
     if (shouldMount) {
       mount({
         user,
