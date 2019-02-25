@@ -1,11 +1,40 @@
-const dog = () =>{
-  console.log('Hello from Preload!')
-  const root = document.getElementById('root')
-  if(root){
-    root.innerText = 'Cheese Doodles'
-  }else{
-    console.error(`no #root`)
+
+const SystemActions = require('./systemActions')
+
+const placesToMount = {
+  '~/mount2': {
+    user: 'victor',
+    remoteHost: 'regan.law.uga.edu',
+    remotePath: '/var/www/html/test/web/modules'
+  },
+  '~/mount': {
+    user: 'victor',
+    remoteHost: 'regan.law.uga.edu',
+    remotePath: '/var/www/html/test/web/themes'
   }
+}
+
+const mountTest = () => {
+  const shouldMount = true
+
+  Object.keys(placesToMount).map(mountPoint => {
+    const { mount, unmount } = SystemActions.localPlace({ mountPoint })
+    const details = placesToMount[mountPoint]
+    const {
+      user,
+      remoteHost,
+      remotePath
+    } = details
+    if (shouldMount) {
+      mount({
+        user,
+        remoteHost,
+        remotePath
+      })
+    } else {
+      unmount()
+    }
+  })
 }
 
 process.once('loaded', () => {
@@ -13,17 +42,5 @@ process.once('loaded', () => {
 })
 
 window.onload = () => {
-  // webpage is completely loaded
-  console.log(process)
-  dog()
+  mountTest()
 }
-
-// window.onbeforeunload = (e) => {
-//   console.log('I do not want to be closed')
-
-//   // Unlike usual browsers that a message box will be prompted to users, returning
-//   // a non-void value will silently cancel the close.
-//   // It is recommended to use the dialog API to let the user confirm closing the
-//   // application.
-//   e.returnValue = false // equivalent to `return false` but not recommended
-// }
