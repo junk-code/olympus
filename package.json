@@ -2,5 +2,11 @@
   "name": "olympus",
   "version": "1.0.0",
   "main": "main.js",
-  "license": "MIT"
+  "license": "MIT",
+  "scripts": {
+    "start": "electron ."
+  },
+  "dependencies": {
+    "standard": "^12.0.1"
+  }
 }
