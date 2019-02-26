@@ -1,13 +1,13 @@
-const {app, BrowserWindow} = require('electron')
+const { app, BrowserWindow } = require('electron')
 const path = require('path')
 
 let mainWindow
 
 function createWindow () {
-
   mainWindow = new BrowserWindow({
     width: 800,
     height: 600,
+    show: false,
     webPreferences: {
       contextIsolation: false,
       nodeIntegration: true,
@@ -18,6 +18,10 @@ function createWindow () {
   mainWindow.loadFile('index.html')
 
   mainWindow.webContents.openDevTools()
+
+  mainWindow.on('ready-to-show', () => {
+    mainWindow.show()
+  })
 
   mainWindow.on('closed', function () {
     mainWindow = null
