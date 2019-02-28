@@ -1,0 +1,8 @@
+.connection{
+  padding: 1rem;
+  display: flex;
+  flex-direction: column;
+  &__bottom-wrapper{
+    display:flex;
+  }
+}

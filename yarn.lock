@@ -1509,7 +1509,7 @@ combined-stream@^1.0.6, combined-stream@~1.0.6:
   dependencies:
     delayed-stream "~1.0.0"
 
-command-exists@^1.2.6, command-exists@^1.2.8:
+command-exists@^1.0.2, command-exists@^1.2.6, command-exists@^1.2.8:
   version "1.2.8"
   resolved "https://registry.yarnpkg.com/command-exists/-/command-exists-1.2.8.tgz#715acefdd1223b9c9b37110a149c6392c2852291"
   integrity sha512-PM54PkseWbiiD/mMsbvW351/u+dafwTJ0ye2qB60G1aGQP9j3xK2gmMDc+R34L3nDtx4qMCitXT75mkbkGJDLw==
@@ -6262,6 +6262,13 @@ tar@^4:
     mkdirp "^0.5.0"
     safe-buffer "^5.1.2"
     yallist "^3.0.2"
+
+term-launcher@^0.4.0:
+  version "0.4.0"
+  resolved "https://registry.yarnpkg.com/term-launcher/-/term-launcher-0.4.0.tgz#380866bc94229c2b2b88f8966bf5792d0d590174"
+  integrity sha512-lid61fnaOZ6hvYUI+hajvsAg9EP4lXI4cYFut6pNuzBinffQDS7YlpW/URwMQcqMyMVQo0H7n7hLfKrDm7w1Vg==
+  dependencies:
+    command-exists "^1.0.2"
 
 terser@^3.7.3, terser@^3.8.1:
   version "3.16.1"

@@ -11,7 +11,7 @@ const internalConnectionList = ({
   ...props
 }) => {
   const handleAddClick = () => {
-    addConnection({ label: 'cheese' })
+    addConnection({})
   }
 
   const mappedConnections = connections.map(({ id, ...data }) => (

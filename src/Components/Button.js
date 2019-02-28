@@ -5,11 +5,12 @@ export const Button = ({
   children,
   kind,
   size,
+  disabled,
   ...props
 }) => {
   return (
     <button
-      className={`${className || ''} button button--size-${size || 'normal'} button--kind-${kind || 'default'}`} {...props}>
+      className={`${className || ''} button button--size-${size || 'normal'} button--kind-${kind || 'default'} ${disabled ? 'button--disabled' : 'button--enabled'}`} disabled={!!disabled} {...props}>
       { children }
     </button>
   )

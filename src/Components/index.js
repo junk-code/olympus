@@ -4,6 +4,11 @@ import { TextInput } from './TextInput'
 import { FolderSelectButton } from './FolderSelectButton'
 import { ConnectionList } from './ConnectionList'
 import { Connection } from './Connection'
+import { FolderExploreButton } from './FolderExploreButton'
+import { SpawnTerminalButton } from './SpawnTerminalButton'
+import { UserHostPathInput } from './UserHostPathInput'
+import { SSHFSButton } from './SSHFSButton'
+import { ToggleButton } from './ToggleButton'
 
 export {
   Button,
@@ -11,5 +16,10 @@ export {
   TextInput,
   FolderSelectButton,
   ConnectionList,
-  Connection
+  Connection,
+  FolderExploreButton,
+  SpawnTerminalButton,
+  UserHostPathInput,
+  SSHFSButton,
+  ToggleButton
 }

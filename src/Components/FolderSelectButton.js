@@ -38,6 +38,9 @@ export const FolderSelectButton = ({
     )
   }
   return (
-    <Button kind={kind} size={size} onClick={clickHandler}><span className='fas fa-folder' /></Button>
+    <Button kind={kind} size={size} onClick={clickHandler}>
+      <span className='fas fa-folder' />
+
+    </Button>
   )
 }
