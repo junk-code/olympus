@@ -1,21 +1,23 @@
 import React from 'react'
 import './App.scss'
 
-const Button = ({ children }) => (
-  <button className='button button--hot-pink'>{ children }</button>
-)
+import {
+  Button,
+  ButtonHolder,
+  TextInput,
+  ConnectionList,
+  FolderSelectButton
+} from './Components'
 
-const ButtonHolder = ({ children }) => (
-  <div className='button-holder'>{children}</div>
-)
 export const App = () => {
+  const handleFolderSelection = (selection) => {
+    console.log('Folder Selection:', selection)
+  }
+
   return (
-    <React.Fragment>
-      <ButtonHolder>
-        <Button>Launch</Button>
-        <Button>Grab</Button>
-        <Button>Kill</Button>
-      </ButtonHolder>
-    </React.Fragment>
+    <div>
+      <ConnectionList />
+      <FolderSelectButton onFolderSelected={handleFolderSelection} size='small' kind='info' title='Select a Directory' message='Please choose a place where we can mount our remote directory. An empty directory is best.' />
+    </div>
   )
 }
