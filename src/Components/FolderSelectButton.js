@@ -10,7 +10,8 @@ export const FolderSelectButton = ({
   size,
   title,
   message,
-  onFolderSelected
+  onFolderSelected,
+  ...props
 }) => {
   const callback = (a, b) => {
     if (typeof onFolderSelected === 'function') {
@@ -38,7 +39,7 @@ export const FolderSelectButton = ({
     )
   }
   return (
-    <Button kind={kind} size={size} onClick={clickHandler}>
+    <Button {...props} kind={kind} size={size} onClick={clickHandler}>
       <span className='fas fa-folder' />
 
     </Button>

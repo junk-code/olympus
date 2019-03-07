@@ -10,9 +10,7 @@ const internalConnectionList = ({
   connections,
   ...props
 }) => {
-  const handleAddClick = () => {
-    addConnection({})
-  }
+  const handleAddClick = () => addConnection({})
 
   const mappedConnections = connections.map(({ id, ...data }) => (
     <Connection key={id} connectionId={id} {...data} />

@@ -10,15 +10,16 @@ export const UserHostPathInput = ({
   path,
   onUserChange,
   onHostChange,
-  onPathChange
+  onPathChange,
+  ...props
 }) => {
   return (
     <div className='user-and-host-input'>
-      <TextInput className='user-host-path-input__user' defaultValue={user} placeholder='User' onChange={onUserChange} />
+      <TextInput {...props} className='user-host-path-input__user' defaultValue={user} placeholder='User' onChange={onUserChange} />
       <span>@</span>
-      <TextInput className='user-host-path-input__host' defaultValue={host} placeholder='Host' onChange={onHostChange} />
+      <TextInput {...props} className='user-host-path-input__host' defaultValue={host} placeholder='Host' onChange={onHostChange} />
       <span>:</span>
-      <TextInput className='user-host-path-input__path' defaultValue={path} placeholder='Remote Path' onChange={onPathChange} />
+      <TextInput {...props} className='user-host-path-input__path' defaultValue={path} placeholder='Remote Path' onChange={onPathChange} />
     </div>
   )
 }

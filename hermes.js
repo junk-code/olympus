@@ -34,6 +34,26 @@ const mountRemoteDrive = ({
       reject(new Error(`ExitCode:${code}\n${errors.join('\n')}`, errors))
     }
   })
+})
+
+const unmountRemoteDrive = ({
+  localPath
+}) => new Promise((resolve, reject) => {
+  const params = [`${localPath}`]
+
+  const childProcess = spawn('umount', params, {
+    detached: true
+  })
+
+  const errors = []
+
+  childProcess.on('exit', code => {
+    if (code === 0) {
+      resolve()
+    } else {
+      reject(new Error(`ExitCode:${code}\n${errors.join('\n')}`, errors))
+    }
+  })
 
   childProcess.stderr.on('data', (data) => {
     errors.push(data.toString('utf8'))
@@ -41,5 +61,6 @@ const mountRemoteDrive = ({
 })
 
 module.exports = {
-  mountRemoteDrive
+  mountRemoteDrive,
+  unmountRemoteDrive
 }

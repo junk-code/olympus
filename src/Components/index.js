@@ -7,8 +7,9 @@ import { Connection } from './Connection'
 import { FolderExploreButton } from './FolderExploreButton'
 import { SpawnTerminalButton } from './SpawnTerminalButton'
 import { UserHostPathInput } from './UserHostPathInput'
-import { SSHFSButton } from './SSHFSButton'
 import { ToggleButton } from './ToggleButton'
+import { MountRemoteFolderButton } from './MountRemoteFolderButton'
+import { LaunchInEditorButton } from './LaunchInEditorButton'
 
 export {
   Button,
@@ -20,6 +21,7 @@ export {
   FolderExploreButton,
   SpawnTerminalButton,
   UserHostPathInput,
-  SSHFSButton,
-  ToggleButton
+  ToggleButton,
+  MountRemoteFolderButton,
+  LaunchInEditorButton
 }

@@ -1,6 +1,8 @@
 import { createStore, combineReducers } from 'redux'
-
+import { observableStore } from './observableStore'
 import { connectionsReducer } from './connectionsReducer'
+
+import { directoryWatcher } from './middleware/directoryWatcher'
 
 import throttle from 'lodash/throttle'
 
@@ -10,10 +12,11 @@ const FileSync = require('lowdb/adapters/FileSync')
 const adapter = new FileSync('db.json')
 const db = low(adapter)
 
-db.defaults({ state: {
-  connections: []
-} })
-  .write()
+db.defaults({
+  state: {
+    connections: []
+  }
+}).write()
 
 const masterReducer = combineReducers({
   connections: connectionsReducer
@@ -31,13 +34,12 @@ const loadState = () => {
 }
 
 const getInitialState = () => {
-  return loadState()
+  const state = loadState()
+  return state
 }
 
 export const store = createStore(masterReducer, getInitialState())
 
-store.subscribe(() => {
-  saveState({
-    connections: store.getState().connections
-  })
-})
+observableStore(store, (state) => state, (state) => saveState(state))
+
+directoryWatcher(store)

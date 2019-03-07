@@ -1,5 +1,10 @@
 import nanoid from 'nanoid'
 
+import sane from 'sane'
+import df from 'node-df'
+
+const watchingConnections = new Map()
+
 const actions = {
   add: 'CONNECTION_ADD',
   remove: 'CONNECTION_REMOVE',
@@ -45,23 +50,77 @@ export const connectionsReducer = (state = [], { type, payload }) => {
   }
 }
 
-export const addConnection = dispatch => ({ ...stuff }) => dispatch({
-  type: actions.add,
-  payload: {
-    ...stuff
-  }
-})
+export const addConnection = dispatch => ({ ...stuff }) => {
+  console.log('add', stuff)
 
-export const removeConnection = dispatch => (id) => dispatch({
-  type: actions.remove,
-  payload: {
-    id
-  }
-})
+  dispatch({
+    type: actions.add,
+    payload: {
+      ...stuff
+    }
+  })
+}
 
-export const updateConnection = dispatch => ({ ...stuff }) => dispatch({
-  type: actions.update,
-  payload: {
-    ...stuff
+export const removeConnection = dispatch => (id) => {
+  console.log('remove', id)
+
+  dispatch({
+    type: actions.remove,
+    payload: {
+      id
+    }
+  })
+}
+
+export const updateConnection = dispatch => ({ ...stuff }) => {
+  const { id, localDirectory, filesystem } = stuff
+
+  if (localDirectory) {
+    df({
+      file: localDirectory
+    }, (error, data) => {
+      if (error) {
+        console.error(error)
+      } else {
+        if (filesystem !== data[0].filesystem) {
+          dispatch({
+            type: actions.update,
+            payload: {
+              id,
+              filesystem: data[0].filesystem
+            }
+          })
+        }
+      }
+    })
   }
-})
+  dispatch({
+    type: actions.update,
+    payload: {
+      ...stuff
+    }
+  })
+}
+
+export const refreshConnectionFilesystem = dispatch => ({ ...stuff }) => {
+  const { id, localDirectory, filesystem } = stuff
+  if (localDirectory) {
+    df({
+      file: localDirectory
+    }, (error, data) => {
+      if (error) {
+        console.error(error)
+      } else {
+        if (filesystem !== data[0].filesystem) {
+          dispatch({
+            type: actions.update,
+            payload: {
+              id,
+              filesystem: data[0].filesystem
+            }
+          })
+        }
+      }
+    })
+  }
+}

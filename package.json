@@ -14,11 +14,13 @@
     "nanoid": "^2.0.1",
     "node-df": "^0.1.4",
     "node-sass": "^4.11.0",
+    "open-in-editor": "^2.2.0",
     "parcel-bundler": "^1.11.0",
     "react": "^16.8.3",
     "react-dom": "^16.8.3",
     "react-redux": "^6.0.1",
     "redux": "^4.0.1",
+    "sane": "^4.0.3",
     "standard": "^12.0.1",
     "term-launcher": "^0.4.0",
     "untildify": "^3.0.3"

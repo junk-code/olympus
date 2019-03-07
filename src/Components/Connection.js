@@ -1,6 +1,8 @@
-import React from 'react'
+import React, { Component } from 'react'
 import { connect } from 'react-redux'
 import './Connection.scss'
+import sane from 'sane'
+import df from 'node-df'
 
 import {
   Button,
@@ -9,7 +11,8 @@ import {
   FolderExploreButton,
   SpawnTerminalButton,
   UserHostPathInput,
-  SSHFSButton
+  MountRemoteFolderButton,
+  LaunchInEditorButton
 } from './index'
 
 import { removeConnection, updateConnection } from '../store/connectionsReducer'
@@ -39,8 +42,8 @@ const internalConnection = ({ connectionId, remove, update, ...connectionProps }
 
   const termSSHCommand = `
   clear;
-  echo "Connecting to ${connectionProps.user}@${connectionProps.host}:${connectionProps.remoteDirectory} via SSH using your key."
-  ssh -t ${connectionProps.user}@${connectionProps.host} "cd ${connectionProps.remoteDirectory} && exec \$SHELL -l;"
+  echo "Connecting to ${connectionProps.user}@${connectionProps.host}:${connectionProps.remoteDirectory}\n"
+  ssh -t ${connectionProps.user}@${connectionProps.host} "cd ${connectionProps.remoteDirectory} && exec $SHELL -l;"
   `
 
   const handleLabelChange = ({ target }) => handleUpdate({ label: target.value })
@@ -56,11 +59,14 @@ const internalConnection = ({ connectionId, remove, update, ...connectionProps }
     }
   }
 
+  const isMounted = connectionProps.filesystem === `${connectionProps.user}@${connectionProps.host}:${connectionProps.remoteDirectory}`
+
   return (
     <div className='connection'>
-      <Button onClick={handleRemoveClick} size='small' kind='danger'><span className='fas fa-folder-times' /></Button>
-      <FolderSelectButton size='small' kind='success' onFolderSelected={handleFolderSelected} />
-      <TextInput defaultValue={connectionProps.label} onChange={handleLabelChange} placeholder='Label' />
+      <div>
+        <FolderSelectButton size='small' kind='success' onFolderSelected={handleFolderSelected} disabled={isMounted} />
+        <TextInput disabled={isMounted} defaultValue={connectionProps.label} onChange={handleLabelChange} placeholder='Label' />
+      </div>
       <div>{ connectionProps.localDirectory } <span className='fas fa-code-commit' /> { connectionProps.remoteDirectory }</div>
       <UserHostPathInput
         user={connectionProps.user}
@@ -69,12 +75,31 @@ const internalConnection = ({ connectionId, remove, update, ...connectionProps }
         onHostChange={handleHostChange}
         path={connectionProps.remoteDirectory}
         onPathChange={handleRemotePathChange}
+        disabled={isMounted}
       />
       <div className='connection__bottom-wrapper'>
+        <Button onClick={handleRemoveClick} size='small' kind='danger' disabled={isMounted}><span className='fas fa-folder-times' /></Button>
         <FolderExploreButton size='small' kind='info' path={connectionProps.localDirectory} />
+        <MountRemoteFolderButton
+          kind='info'
+          size='small'
+          isBusy={connectionProps.isMountButtonBusy}
+          connectionId={connectionId}
+          user={connectionProps.user}
+          host={connectionProps.host}
+          remotePath={connectionProps.remoteDirectory}
+          localPath={connectionProps.localDirectory}
+          volumeName={connectionProps.label}
+          isMounted={isMounted}
+        />
+        <LaunchInEditorButton
+          kind='info'
+          size='small'
+          editor={'code'}
+          localPath={connectionProps.localDirectory}
+        />
         <SpawnTerminalButton size='small' kind='warning' label='Shell' disabled={!connectionProps.localDirectory} command={termAtFolderCommand} />
         <SpawnTerminalButton size='small' kind='warning' label='ssh' command={termSSHCommand} disabled={!canSSH()} />
-        <SSHFSButton kind='info' size='small' />
       </div>
     </div>
   )
