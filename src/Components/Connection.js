@@ -91,12 +91,14 @@ const internalConnection = ({ connectionId, remove, update, ...connectionProps }
           localPath={connectionProps.localDirectory}
           volumeName={connectionProps.label}
           isMounted={isMounted}
+          disabled={!(connectionProps.host && connectionProps.user)}
         />
         <LaunchInEditorButton
           kind='info'
           size='small'
           editor={'code'}
           localPath={connectionProps.localDirectory}
+          disabled={!(connectionProps.localDirectory)}
         />
         <SpawnTerminalButton size='small' kind='warning' label='Shell' disabled={!connectionProps.localDirectory} command={termAtFolderCommand} />
         <SpawnTerminalButton size='small' kind='warning' label='ssh' command={termSSHCommand} disabled={!canSSH()} />
