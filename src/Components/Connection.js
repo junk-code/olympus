@@ -1,8 +1,6 @@
-import React, { Component } from 'react'
+import React from 'react'
 import { connect } from 'react-redux'
 import './Connection.scss'
-import sane from 'sane'
-import df from 'node-df'
 
 import {
   Button,
@@ -30,7 +28,6 @@ const internalConnection = ({ connectionId, remove, update, ...connectionProps }
   }
 
   const handleFolderSelected = (localDirectory) => {
-    // console.log('folder:', localDirectory)
     handleUpdate({ localDirectory })
   }
 
