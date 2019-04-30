@@ -39,14 +39,15 @@ const internalConnection = ({ connectionId, remove, update, ...connectionProps }
 
   const termSSHCommand = `
   clear;
-  echo "Connecting to ${connectionProps.user}@${connectionProps.host}:${connectionProps.remoteDirectory}\n"
-  ssh -t ${connectionProps.user}@${connectionProps.host} "cd ${connectionProps.remoteDirectory} && exec $SHELL -l;"
+  echo "Connecting to ${connectionProps.user}@${connectionProps.host}:${connectionProps.remoteDirectory}${connectionProps.port ? ` on port ${connectionProps.port}` : ''}\n"
+  ssh -t ${connectionProps.user}@${connectionProps.host} ${connectionProps.port ? ` -p ${connectionProps.port}` : ''} "cd ${connectionProps.remoteDirectory} && exec $SHELL -l;"
   `
 
   const handleLabelChange = ({ target }) => handleUpdate({ label: target.value })
   const handleUserChange = ({ target }) => handleUpdate({ user: target.value })
   const handleHostChange = ({ target }) => handleUpdate({ host: target.value })
   const handleRemotePathChange = ({ target }) => handleUpdate({ remoteDirectory: target.value })
+  const handlePortChange = ({ target }) => handleUpdate({ port: target.value })
 
   const canSSH = () => {
     if (connectionProps.user && connectionProps.host && connectionProps.remoteDirectory) {
@@ -60,9 +61,9 @@ const internalConnection = ({ connectionId, remove, update, ...connectionProps }
 
   return (
     <div className='connection'>
-      <div>
+      <div className='connection__top-wrapper'>
         <FolderSelectButton size='small' kind='success' onFolderSelected={handleFolderSelected} disabled={isMounted} />
-        <TextInput disabled={isMounted} defaultValue={connectionProps.label} onChange={handleLabelChange} placeholder='Label' />
+        <TextInput className='connection__label' disabled={isMounted} defaultValue={connectionProps.label} onChange={handleLabelChange} placeholder='Label' />
       </div>
       <div>{ connectionProps.localDirectory } <span className='fas fa-code-commit' /> { connectionProps.remoteDirectory }</div>
       <UserHostPathInput
@@ -72,6 +73,8 @@ const internalConnection = ({ connectionId, remove, update, ...connectionProps }
         onHostChange={handleHostChange}
         path={connectionProps.remoteDirectory}
         onPathChange={handleRemotePathChange}
+        port={connectionProps.port}
+        onPortChange={handlePortChange}
         disabled={isMounted}
       />
       <div className='connection__bottom-wrapper'>
@@ -88,7 +91,7 @@ const internalConnection = ({ connectionId, remove, update, ...connectionProps }
           localPath={connectionProps.localDirectory}
           volumeName={connectionProps.label}
           isMounted={isMounted}
-          disabled={!(connectionProps.host && connectionProps.user)}
+          disabled={!(connectionProps.host && connectionProps.user && connectionProps.localDirectory)}
         />
         <LaunchInEditorButton
           kind='info'
