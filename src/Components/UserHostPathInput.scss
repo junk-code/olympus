@@ -3,5 +3,16 @@
   align-items: baseline;
   &__user{
     text-align: right;
+    width: 7rem;
+  }
+  &__host{
+    width: 14rem;
+  }
+  &__path{
+    flex-grow: 1;
+  }
+  &__port{
+    width: 4rem;
+    text-align: center;
   }
 }

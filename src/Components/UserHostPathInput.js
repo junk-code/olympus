@@ -8,9 +8,11 @@ export const UserHostPathInput = ({
   user,
   host,
   path,
+  port,
   onUserChange,
   onHostChange,
   onPathChange,
+  onPortChange,
   ...props
 }) => {
   return (
@@ -20,6 +22,7 @@ export const UserHostPathInput = ({
       <TextInput {...props} className='user-host-path-input__host' defaultValue={host} placeholder='Host' onChange={onHostChange} />
       <span>:</span>
       <TextInput {...props} className='user-host-path-input__path' defaultValue={path} placeholder='Remote Path' onChange={onPathChange} />
+      <TextInput {...props} className='user-host-path-input__port' defaultValue={port || 22} placeholder='Port' onChange={onPortChange} />
     </div>
   )
 }
