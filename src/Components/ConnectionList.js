@@ -1,5 +1,6 @@
 import React from 'react'
 import { connect } from 'react-redux'
+import './ConnectionList.scss'
 
 import { Button, Connection } from './index'
 
@@ -17,9 +18,11 @@ const internalConnectionList = ({
   ))
 
   return (
-    <div>
-      <Button size='small' kind='success' onClick={handleAddClick} ><span className='fas fa-plus' /></Button>
-      <div>
+    <div className='connection-list'>
+      <div className='connection-list__toolbar'>
+        <Button size='small' kind='success' onClick={handleAddClick} ><span className='fas fa-plus' /></Button>
+      </div>
+      <div className='connection-list__list'>
         { mappedConnections }
       </div>
     </div>

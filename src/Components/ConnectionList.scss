@@ -1,0 +1,14 @@
+.connection-list{
+  height: 100vh;
+  display: flex;
+  flex-direction: row;
+  overflow-x: hidden;
+  &__list{
+    overflow-y: scroll;
+    flex-grow: 1;
+  }
+  &__toolbar{
+    background: rgba(0,0,0,.25);
+    padding: 1rem;
+  }
+}
