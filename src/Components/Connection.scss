@@ -5,4 +5,11 @@
   &__bottom-wrapper{
     display:flex;
   }
+  &__top-wrapper{
+    display: flex;
+  }
+  &__label{
+    flex-grow: 1;
+    width: 100%;
+  }
 }
